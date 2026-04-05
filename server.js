@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const logger = require('morgan');
 const authRouter = require('./controllers/auth.routes');
+const verifyToken = require('./middleware/verify-token');
 
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -20,6 +21,10 @@ app.use(logger('dev'));
 
 // Routes go here
 app.use('/auth', authRouter);
+
+app.get('/omar',verifyToken,(req,res)=>{
+  res.json("SUCCESS")
+})
 
 
 app.listen(3000, () => {
